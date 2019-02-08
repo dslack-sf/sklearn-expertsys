@@ -101,7 +101,7 @@ class RuleListClassifier(BaseEstimator):
         ----------
         X : array-like, shape = [n_samples, n_features]
             Training data 
-
+        test blah
         y : array_like, shape = [n_samples]
             Labels
             

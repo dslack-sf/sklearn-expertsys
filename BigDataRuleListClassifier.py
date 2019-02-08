@@ -77,6 +77,7 @@ class BigDataRuleListClassifier(RuleListClassifier):
         self.d_star = None
         
     def _setdata(self, X, y, feature_labels=[], undiscretized_features = []):
+
         self._setlabels(X, feature_labels)
         
         for fi in range(len(X[0])):
@@ -91,8 +92,11 @@ class BigDataRuleListClassifier(RuleListClassifier):
             self.subset_estimator.fit(X, y)
         # calculate distances from decision boundary for each point
         dist = np.abs(0.5-self.subset_estimator.predict_proba(Xn)[:, 1])
+        print (type(y[0]))
         ones_idx = np.where(y==1)[0]
+
         zeros_idx = np.where(y==0)[0]
+ 
         dist_ones = dist[ones_idx]
         dist_zeros = dist[zeros_idx]
         
@@ -105,6 +109,8 @@ class BigDataRuleListClassifier(RuleListClassifier):
         one_fraction = len(np.where(y==1)[0])/float(len(y))
         keep_idx = ones_idx[bestidx_ones[:(int(n*one_fraction)+1)]]
         keep_idx = np.hstack((keep_idx, zeros_idx[bestidx_zeros[:(int(n*(1-one_fraction))+1)]]))
+
+
         
         if type(X) == pd.DataFrame:
             X = X.iloc[keep_idx, :]
